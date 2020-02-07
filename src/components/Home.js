@@ -18,8 +18,8 @@ const Home = (props) => {
                     <div className="row">
                         <div className="col-12">
                             <div className="divider pb-5">
-                            <hr />
-                            <h6 className="text-center text-uppercase mx-auto bg-white">Featured product</h6>
+                                <hr />
+                                <h6 className="text-center text-uppercase mx-auto bg-white">Featured product</h6>
                             </div>
                         </div>
                     </div>

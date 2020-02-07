@@ -28,10 +28,10 @@ class Footer extends Component {
             <div className="discount py-4 bg-second">
             <div className="container">
                 <div className="row">
-                <div className="col-12">
-                    <p className="text-center white no-styles">Take 20% with code - 
-                    <strong> discount20</strong></p>
-                </div>
+                    <div className="col-12">
+                        <p className="text-center white no-styles">Take 20% with code - 
+                        <strong> discount20</strong></p>
+                    </div>
                 </div>
             </div>
             </div>
@@ -41,12 +41,12 @@ class Footer extends Component {
                 <div className="col-lg-3 d-none d-lg-block">
                     <h5 className="text-uppercase second">Explore</h5>
                     <ul>
-                    <li><Link to="/" className="grey">Home</Link></li>
-                    <li><Link to="/shop" className="grey">Shop</Link></li>
-                    <li><Link to="/about" className="grey">About</Link></li>
-                    <li><Link to="/contact" className="grey">Contact</Link></li>
-                    <li><Link to="/login" className="grey">Login</Link></li>
-                    <li><Link to="/cart" className="grey">Cart</Link></li>
+                        <li><Link to="/" className="grey">Home</Link></li>
+                        <li><Link to="/shop" className="grey">Shop</Link></li>
+                        <li><Link to="/about" className="grey">About</Link></li>
+                        <li><Link to="/contact" className="grey">Contact</Link></li>
+                        <li><Link to="/login" className="grey">Login</Link></li>
+                        <li><Link to="/cart" className="grey">Cart</Link></li>
                     </ul>
                 </div>
                 <div className="col-12 col-sm-6 col-lg-6 about">
@@ -68,20 +68,20 @@ class Footer extends Component {
             </div>
             </div>
             <div className="container-fluid">
-            <div className="copyright">
-                <div className="container">
-                <div className="row">
-                    <div className="col-12 col-md-6">
-                    <h6 className="no-styles grey copyrighttext">Copyright © Pantheon Genetics 2019</h6>
-                    </div>
-                    <div className="col-12 col-md-6">
-                    <h6 className="no-styles grey copyrightmade">
-                        Designed and coded by <span className="first"><a href="http://www.yourigruiters.com" className="first">Youri Gruiters</a></span>
-                    </h6>
+                <div className="copyright">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-12 col-md-6">
+                                <h6 className="no-styles grey copyrighttext">Copyright © Pantheon Genetics 2019</h6>
+                            </div>
+                            <div className="col-12 col-md-6">
+                                <h6 className="no-styles grey copyrightmade">
+                                    Designed and coded by <span className="first"><a href="http://www.yourigruiters.com" className="first">Youri Gruiters</a></span>
+                                </h6>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
-            </div>
             </div>
         </footer>
         )

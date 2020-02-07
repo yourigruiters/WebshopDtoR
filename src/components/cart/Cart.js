@@ -85,7 +85,7 @@ class Cart extends Component {
             })
         ) : (
             <tr>
-                <td colSpan="5">Nothing in your cart...</td>
+                <td colSpan="5">Nothing in cart...</td>
             </tr>
         );
 
