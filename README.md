@@ -8,3 +8,7 @@ React webshop made from previous HTML design
 - React-router-dom
 - Bootstrap
 - Class components
+
+##### Shop page
+
+![Shop](/readme_screenshots/webshop.png)
