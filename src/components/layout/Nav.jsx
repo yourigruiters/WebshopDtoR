@@ -2,7 +2,7 @@ import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import Logo from "../../images/logo/logomark_pantheon_genetics_gold_transparent.png";
 
-const Nav = ({ cartItems }) => {
+const Nav = ({ cart }) => {
   return (
     <nav id="navbar" className="bg-white">
       <div className="container">
@@ -54,7 +54,7 @@ const Nav = ({ cartItems }) => {
               <span>
                 <i className="fas fa-shopping-cart first"></i>
               </span>
-              <strong> {cartItems}</strong>
+              <strong> {cart.length}</strong>
             </p>
           </Link>
         </div>

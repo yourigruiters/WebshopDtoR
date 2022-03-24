@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FeaturedProduct from "./products/FeaturedProduct";
 
-const Home = ({ products, changeCart }) => {
+const Home = ({ products, addToCart }) => {
   return (
     <div>
       <div>
@@ -26,7 +26,7 @@ const Home = ({ products, changeCart }) => {
               </div>
             </div>
           </div>
-          <FeaturedProduct products={products} changeCart={changeCart} />
+          <FeaturedProduct products={products} addToCart={addToCart} />
         </div>
       </div>
     </div>

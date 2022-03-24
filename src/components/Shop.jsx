@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Product from "./products/Product";
 
-const Shop = ({ products, changeCart }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [allProducts, setAllProducts] = useState("");
+const Shop = ({ products, addToCart }) => {
+  const [allProducts, setAllProducts] = useState(products);
   const [search, setSearch] = useState("");
-  const [filter, setFilter] = useState(0);
-
-  useEffect(() => {
-    setIsLoaded(true);
-    setAllProducts(products);
-  }, []);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -78,16 +71,14 @@ const Shop = ({ products, changeCart }) => {
                 </div>
               </div>
               <div className="row">
-                {isLoaded ? (
+                {allProducts ? (
                   allProducts.map((product) => {
                     if (product.title.includes(search)) {
                       return (
                         <Product
                           key={product.id}
-                          id={product.id}
-                          title={product.title}
-                          price={product.price}
-                          changeCart={changeCart}
+                          product={product}
+                          addToCart={addToCart}
                         />
                       );
                     }

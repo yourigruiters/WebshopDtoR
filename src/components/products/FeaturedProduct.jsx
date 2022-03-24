@@ -2,59 +2,38 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
-const CompleteProduct = ({ products, changeCart }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [number, setNumber] = useState(1);
+const CompleteProduct = ({ products, addToCart }) => {
+  const [amount, setAmount] = useState(1);
   const [error, setError] = useState("");
   const [product, setProduct] = useState({
-    id: "",
+    id: 0,
     title: "",
     content: "",
     price: "",
   });
 
   useEffect(() => {
-    let productList = products;
+    const random = Math.floor(Math.random() * products.length) + 1;
+    const currentProduct = products.find((product) => product.id === random);
 
-    let random = Math.floor(Math.random() * productList.length) + 1;
-
-    const currentProduct = productList.find((product) => product.id === random);
-
-    setIsLoaded(true);
-    setProduct({
-      id: currentProduct.id,
-      title: currentProduct.title,
-      content: currentProduct.content,
-      price: currentProduct.price,
-    });
-  }, []);
+    setProduct(currentProduct);
+  }, [products]);
 
   const handleChange = (e) => {
-    setNumber(parseInt(e.target.value));
+    setAmount(parseInt(e.target.value));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let item = {
-      id: product.id,
-      amount: number,
-    };
+    const result = addToCart(product, amount);
 
-    let cart = JSON.parse(localStorage.getItem("cart"));
-
-    if (cart == null) cart = [];
-
-    const found = cart.find((cartItem) => cartItem.id === item.id);
-
-    found ? setError("Already in cart") : (cart = [...cart, item]);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    changeCart();
+    if (!result) {
+      setError("Already in cart");
+    }
   };
 
-  return isLoaded ? (
+  return (
     <div className="row">
       <div className="col-12 col-lg-4 mb-4">
         <div className="product-image">
@@ -83,7 +62,7 @@ const CompleteProduct = ({ products, changeCart }) => {
             type="number"
             min="1"
             max="10"
-            value={number}
+            value={amount}
             onChange={(e) => handleChange(e)}
           />
           <button className="button w-100">Add to cart</button>
@@ -93,8 +72,6 @@ const CompleteProduct = ({ products, changeCart }) => {
         </Link>
       </div>
     </div>
-  ) : (
-    <p>Product is loading.</p>
   );
 };
 

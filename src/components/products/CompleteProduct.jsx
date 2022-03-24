@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
-const CompleteProduct = ({ products, changeCart, match }) => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [number, setNumber] = useState(1);
+const CompleteProduct = ({ products, addToCart, match }) => {
+  const [amount, setAmount] = useState(1);
   const [error, setError] = useState("");
   const [product, setProduct] = useState({
     id: "",
@@ -14,50 +13,29 @@ const CompleteProduct = ({ products, changeCart, match }) => {
   });
 
   useEffect(() => {
-    let productId = parseInt(match.params.id);
-
-    let productList = products;
-
-    const currentProduct = productList.find(
-      (product) => product.id === productId
+    const urlProductID = parseInt(match.params.id);
+    const currentProduct = products.find(
+      (product) => product.id === urlProductID
     );
 
-    setIsLoaded(true);
-    setProduct({
-      id: currentProduct.id,
-      title: currentProduct.title,
-      content: currentProduct.content,
-      price: currentProduct.price,
-    });
-    setError("");
+    setProduct(currentProduct);
   }, []);
 
   const handleChange = (e) => {
-    setNumber(parseInt(e.target.value));
+    setAmount(parseInt(e.target.value));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    let item = {
-      id: product.id,
-      amount: number,
-    };
+    const result = addToCart(product, amount);
 
-    let cart = JSON.parse(localStorage.getItem("cart"));
-
-    if (cart == null) cart = [];
-
-    const found = cart.find((cartItem) => cartItem.id === item.id);
-
-    found ? setError("Already in cart") : (cart = [...cart, item]);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    changeCart();
+    if (!result) {
+      setError("Already in cart");
+    }
   };
 
-  return isLoaded ? (
+  return (
     <div id="content">
       <div className="container">
         <div className="row">
@@ -100,7 +78,7 @@ const CompleteProduct = ({ products, changeCart, match }) => {
                 type="number"
                 min="1"
                 max="10"
-                value={number}
+                value={amount}
                 onChange={(e) => handleChange(e)}
               />
               <button className="button w-100">Add to cart</button>
@@ -112,8 +90,6 @@ const CompleteProduct = ({ products, changeCart, match }) => {
         </div>
       </div>
     </div>
-  ) : (
-    <p>Product is loading.</p>
   );
 };
 

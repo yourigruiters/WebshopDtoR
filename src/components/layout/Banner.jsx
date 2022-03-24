@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../images/logo/logotype_pantheon_genetics_gold_transparent.png";
 
-const Banner = ({ cartItems }) => {
+const Banner = ({ cart }) => {
   return (
     <div className="banner" id="banner">
       <div className="container">
@@ -40,7 +40,7 @@ const Banner = ({ cartItems }) => {
                 <span>
                   <i className="fas fa-shopping-cart third"></i>
                 </span>
-                <strong>Shopping</strong> cart ({cartItems})
+                <strong>Shopping</strong> cart ({cart.length})
               </Link>
             </p>
           </div>

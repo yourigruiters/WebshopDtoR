@@ -1,93 +1,29 @@
 import React, { useState, useEffect } from "react";
 import CartProduct from "../products/CartProduct";
 
-const Cart = ({ products, changeCart }) => {
+const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    console.log(cart);
-    let productList = products;
-
     let amount = 0;
     let total = 0;
 
     cart &&
       cart.map((cartProduct) => {
-        let product = productList.filter(
-          (product) => product.id === cartProduct.id
-        );
-        total = total + product[0].price * cartProduct.amount;
+        total = total + cartProduct.product.price * cartProduct.amount;
         amount = amount + cartProduct.amount;
-        return product[0].price;
+        return cartProduct.product.price;
       });
 
     setAmount(amount);
     setTotal(total.toFixed(2));
   }, []);
 
-  const updateCart = () => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-    let productList = products;
-
-    let amount = 0;
-    let total = 0;
-
-    cart.map((cartProduct) => {
-      let product = productList.filter(
-        (product) => product.id === cartProduct.id
-      );
-      total = total + product[0].price * cartProduct.amount;
-      amount = amount + cartProduct.amount;
-      return product[0].price;
-    });
-
-    setAmount(amount);
-    setTotal(total.toFixed(2));
-  };
-
-  const deleteFromCart = (id) => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-
-    cart = cart.filter((product) => product.id !== id);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    changeCart();
-    updateCart();
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     alert("Unavailable");
-  };
-
-  const renderCartList = () => {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-
-    if (cart == null) cart = [];
-
-    const cartList = cart.length ? (
-      cart.map((product) => {
-        return (
-          <CartProduct
-            key={product.id}
-            id={product.id}
-            amount={product.amount}
-            products={this.props.products}
-            changeCart={this.props.changeCart}
-            updateCart={this.updateCart}
-            deleteFromCart={this.deleteFromCart}
-          />
-        );
-      })
-    ) : (
-      <tr>
-        <td colSpan="5">Nothing in cart...</td>
-      </tr>
-    );
   };
 
   return (
@@ -109,7 +45,24 @@ const Cart = ({ products, changeCart }) => {
                     <th>Delete</th>
                   </tr>
                 </thead>
-                <tbody>{renderCartList()}</tbody>
+                <tbody>
+                  {cart.length ? (
+                    cart.map((product) => {
+                      return (
+                        <CartProduct
+                          key={product.id}
+                          product={product}
+                          changeProductAmount={changeProductAmount}
+                          removeFromCart={removeFromCart}
+                        />
+                      );
+                    })
+                  ) : (
+                    <tr>
+                      <td colSpan="5">Nothing in cart...</td>
+                    </tr>
+                  )}
+                </tbody>
               </table>
             </div>
           </div>
@@ -122,7 +75,7 @@ const Cart = ({ products, changeCart }) => {
                   <tr>
                     <td>Items</td>
                     <td>
-                      <strong>{this.state.amount}</strong>
+                      <strong>{amount}</strong>
                     </td>
                   </tr>
                   <tr>
