@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Product } from "../defaultTypes";
+import { Product } from "../typings/defaultTypes";
 import FeaturedProduct from "./products/FeaturedProduct";
 
 interface IProps {

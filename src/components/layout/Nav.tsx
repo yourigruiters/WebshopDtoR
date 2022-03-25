@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { CartProduct } from "../../defaultTypes";
+import { CartProduct } from "../../typings/defaultTypes";
 import Logo from "../../images/logo/logomark_pantheon_genetics_gold_transparent.png";
 
 interface IProps {

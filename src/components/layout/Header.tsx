@@ -1,5 +1,5 @@
 import React from "react";
-import { CartProduct } from "../../defaultTypes";
+import { CartProduct } from "../../typings/defaultTypes";
 import Banner from "./Banner";
 import Nav from "./Nav";
 

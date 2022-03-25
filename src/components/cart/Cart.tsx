@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CartProduct as CartProductType } from "../../defaultTypes";
+import { CartProduct as CartProductType } from "../../typings/defaultTypes";
 import CartProduct from "../products/CartProduct";
 
 interface IProps {

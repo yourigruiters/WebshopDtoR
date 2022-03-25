@@ -10,7 +10,7 @@ import CompleteProduct from "./components/products/CompleteProduct";
 import Login from "./components/auth/Login";
 import Cart from "./components/cart/Cart";
 import Error404 from "./components/error/Error404";
-import { CartProduct, Product } from "./defaultTypes";
+import { CartProduct, Product } from "./typings/defaultTypes";
 import "./App.css";
 
 const products: Product[] = [

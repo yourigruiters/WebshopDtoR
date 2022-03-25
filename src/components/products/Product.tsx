@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Product as ProductType } from "../../defaultTypes";
+import { Product as ProductType } from "../../typings/defaultTypes";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
 interface IProps {
