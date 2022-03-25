@@ -2,7 +2,9 @@ import React from "react";
 import AccountLogin from "./AccountLogin";
 import AccountRegister from "./AccountRegister";
 
-const Login = () => {
+interface IProps {}
+
+const Login: React.FC<IProps> = () => {
   return (
     <div id="content">
       <div className="container-fluid">

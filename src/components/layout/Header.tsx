@@ -1,8 +1,13 @@
 import React from "react";
+import { CartProduct } from "../../defaultTypes";
 import Banner from "./Banner";
 import Nav from "./Nav";
 
-const Header = ({ cart }) => {
+interface IProps {
+  cart: CartProduct[];
+}
+
+const Header: React.FC<IProps> = ({ cart }) => {
   return (
     <header id="top">
       <Banner cart={cart} />

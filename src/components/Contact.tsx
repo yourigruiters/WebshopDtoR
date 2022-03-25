@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
-const Contact = () => {
+interface IProps {}
+const Contact: React.FC<IProps> = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -8,11 +8,11 @@ const Contact = () => {
     message: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     alert("Unavailable");
@@ -32,24 +32,28 @@ const Contact = () => {
               corporis vel quidem, dignissimos, id itaque dolorem blanditiis
               repellat atque! Dolore, obcaecati iure.
             </p>
-            <form className="pt-3" onSubmit={(e) => handleSubmit(e)}>
+            <form className="pt-3" onSubmit={(e: any) => handleSubmit(e)}>
               <label>Name</label>
-              <input type="text" id="name" onChange={(e) => handleChange(e)} />
+              <input
+                type="text"
+                id="name"
+                onChange={(e: any) => handleChange(e)}
+              />
               <label>E-mail</label>
               <input
                 type="email"
                 id="email"
-                onChange={(e) => handleChange(e)}
+                onChange={(e: any) => handleChange(e)}
               />
               <label>Subject</label>
               <input
                 type="text"
                 id="subject"
-                onChange={(e) => handleChange(e)}
+                onChange={(e: any) => handleChange(e)}
               />
               <label>Message</label>
               <textarea
-                onChange={(e) => handleChange(e)}
+                onChange={(e: any) => handleChange(e)}
                 id="message"
               ></textarea>
               <button className="button">Hit us up!</button>

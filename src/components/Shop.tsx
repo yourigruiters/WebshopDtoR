@@ -1,15 +1,21 @@
 import React, { useState } from "react";
+import { Product as ProductType } from "../defaultTypes";
 import Product from "./products/Product";
 
-const Shop = ({ products, addToCart }) => {
+interface IProps {
+  products: ProductType[];
+  addToCart: (newProduct: ProductType, amount: number) => boolean;
+}
+
+const Shop: React.FC<IProps> = ({ products, addToCart }) => {
   const [allProducts, setAllProducts] = useState(products);
   const [search, setSearch] = useState("");
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: any) => {
     setSearch(e.target.value);
   };
 
-  const handleSelect = (e) => {
+  const handleSelect = (e: any) => {
     let productList = products;
 
     switch (e.target.value) {
@@ -76,7 +82,7 @@ const Shop = ({ products, addToCart }) => {
                     if (product.title.includes(search)) {
                       return (
                         <Product
-                          key={product.product.id}
+                          key={product.id}
                           product={product}
                           addToCart={addToCart}
                         />

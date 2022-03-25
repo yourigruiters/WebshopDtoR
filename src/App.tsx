@@ -10,19 +10,22 @@ import CompleteProduct from "./components/products/CompleteProduct";
 import Login from "./components/auth/Login";
 import Cart from "./components/cart/Cart";
 import Error404 from "./components/error/Error404";
+import { CartProduct, Product } from "./defaultTypes";
 import "./App.css";
 
-const products = [
+const products: Product[] = [
   { id: 1, title: "Product 1", content: "Content...", price: 39.99 },
   { id: 2, title: "Product 2", content: "Content...", price: 29.99 },
   { id: 3, title: "Product 3", content: "Content...", price: 19.99 },
   { id: 4, title: "Product 4", content: "Content...", price: 25.99 },
 ];
 
-const App = () => {
-  const [cart, setCart] = useState([]);
+interface IProps {}
 
-  const addToCart = (newProduct, amount) => {
+const App: React.FC<IProps> = () => {
+  const [cart, setCart] = useState<CartProduct[]>([]);
+
+  const addToCart = (newProduct: Product, amount: number): boolean => {
     const product = cart.find(
       (cartItem) => cartItem.product.id === newProduct.id
     );
@@ -35,26 +38,18 @@ const App = () => {
     return false;
   };
 
-  const changeProductAmount = (id, amount) => {
+  const changeProductAmount = (id: number, amount: number) => {
     const productIndex = cart.findIndex(
       (cartItem) => cartItem.product.id === id
     );
-    // const newProduct = { ...cart[productIndex], amount: amount };
-
-    // console.log(newProduct);
-    // const newCart = [...cart, (cart[productIndex].amount = amount)];
-
-    // console.log("newCart", newCart);
 
     let newCart = cart;
-    console.log(newCart);
     newCart[productIndex].amount = amount;
-    console.log(newCart);
 
     setCart(newCart);
   };
 
-  const removeFromCart = (id) => {
+  const removeFromCart = (id: number) => {
     const newCart = cart.filter((cartItem) => cartItem.product.id !== id);
 
     setCart(newCart);
@@ -66,31 +61,26 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          exact
           element={<Home products={products} addToCart={addToCart} />}
         />
         <Route
           path="/shop"
-          exact
           element={<Shop products={products} addToCart={addToCart} />}
         />
         <Route
           path="/shop/:id"
-          exact
           element={
             <CompleteProduct products={products} addToCart={addToCart} />
           }
         />
-        <Route path="/about" exact element={<About />} />
-        <Route path="/contact" exact element={<Contact />} />
-        <Route path="/login" exact element={<Login />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/cart"
-          exact
           element={
             <Cart
               cart={cart}
-              addToCart={addToCart}
               changeProductAmount={changeProductAmount}
               removeFromCart={removeFromCart}
             />

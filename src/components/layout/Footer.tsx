@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+interface IProps {}
+
+const Footer: React.FC<IProps> = () => {
   const [email, setEmail] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     alert("Unavailable");
@@ -82,11 +84,11 @@ const Footer = () => {
             <div className="col-12 col-sm-6 col-lg-3 connect">
               <h5 className="text-uppercase second">Connect</h5>
               <p className="grey">Join our mailing list for updates</p>
-              <form onSubmit={(e) => handleSubmit(e)}>
+              <form onSubmit={(e: any) => handleSubmit(e)}>
                 <input type="email" />
                 <button
                   className="button"
-                  onChange={(e) => handleChange(e)}
+                  onChange={(e: any) => handleChange(e)}
                   placeholder="Enter email..."
                   value={email}
                 >

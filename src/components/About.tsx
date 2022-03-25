@@ -1,7 +1,7 @@
 import React from "react";
 import Background from "../images/temp/temp-background.jpg";
-
-const About = () => {
+interface IProps {}
+const About: React.FC<IProps> = () => {
   return (
     <div id="content">
       <div className="container">

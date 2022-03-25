@@ -1,15 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Product } from "../../defaultTypes";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
-const CompleteProduct = ({ products, addToCart, match }) => {
-  const [amount, setAmount] = useState(1);
-  const [error, setError] = useState("");
-  const [product, setProduct] = useState({
-    id: "",
+interface IProps {
+  products: Product[];
+  addToCart: (newProduct: Product, amount: number) => boolean;
+  match?: any;
+}
+
+const CompleteProduct: React.FC<IProps> = ({ products, addToCart, match }) => {
+  const [amount, setAmount] = useState<number>(1);
+  const [error, setError] = useState<string>("");
+  const [product, setProduct] = useState<Product>({
+    id: 0,
     title: "",
     content: "",
-    price: "",
+    price: 0,
   });
 
   useEffect(() => {
@@ -18,14 +25,16 @@ const CompleteProduct = ({ products, addToCart, match }) => {
       (product) => product.id === urlProductID
     );
 
-    setProduct(currentProduct);
+    if (currentProduct) {
+      setProduct(currentProduct);
+    }
   }, [match.params.id, products]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setAmount(parseInt(e.target.value));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const result = addToCart(product, amount);
@@ -73,13 +82,13 @@ const CompleteProduct = ({ products, addToCart, match }) => {
               <span className="quantity">(10 seeds per 1 quantity)</span>
             </h6>
             <p className="error">{error}</p>
-            <form onSubmit={(e) => handleSubmit(e)}>
+            <form onSubmit={(e: any) => handleSubmit(e)}>
               <input
                 type="number"
                 min="1"
                 max="10"
                 value={amount}
-                onChange={(e) => handleChange(e)}
+                onChange={(e: any) => handleChange(e)}
               />
               <button className="button w-100">Add to cart</button>
               <Link to="/shop">

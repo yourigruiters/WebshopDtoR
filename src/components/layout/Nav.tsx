@@ -1,8 +1,13 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { CartProduct } from "../../defaultTypes";
 import Logo from "../../images/logo/logomark_pantheon_genetics_gold_transparent.png";
 
-const Nav = ({ cart }) => {
+interface IProps {
+  cart: CartProduct[];
+}
+
+const Nav: React.FC<IProps> = ({ cart }) => {
   return (
     <nav id="navbar" className="bg-white">
       <div className="container">

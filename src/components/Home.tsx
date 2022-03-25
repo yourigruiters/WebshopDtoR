@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Product } from "../defaultTypes";
 import FeaturedProduct from "./products/FeaturedProduct";
 
-const Home = ({ products, addToCart }) => {
+interface IProps {
+  products: Product[];
+  addToCart: (newProduct: Product, amount: number) => boolean;
+}
+
+const Home: React.FC<IProps> = ({ products, addToCart }) => {
   return (
     <div>
       <div>

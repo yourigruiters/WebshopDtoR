@@ -1,29 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Product } from "../../defaultTypes";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
-const CompleteProduct = ({ products, addToCart }) => {
-  const [amount, setAmount] = useState(1);
-  const [error, setError] = useState("");
-  const [product, setProduct] = useState({
+interface IProps {
+  products: Product[];
+  addToCart: (newProduct: Product, amount: number) => boolean;
+}
+
+const CompleteProduct: React.FC<IProps> = ({ products, addToCart }) => {
+  const [amount, setAmount] = useState<number>(1);
+  const [error, setError] = useState<string>("");
+  const [product, setProduct] = useState<Product>({
     id: 0,
     title: "",
     content: "",
-    price: "",
+    price: 0,
   });
 
   useEffect(() => {
     const random = Math.floor(Math.random() * products.length) + 1;
     const currentProduct = products.find((product) => product.id === random);
 
-    setProduct(currentProduct);
+    if (currentProduct) {
+      setProduct(currentProduct);
+    }
   }, [products]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setAmount(parseInt(e.target.value));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const result = addToCart(product, amount);
@@ -57,13 +65,13 @@ const CompleteProduct = ({ products, addToCart }) => {
           Quantity <span className="quantity">(Items included)</span>
         </h6>
         <p className="error">{error}</p>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form onSubmit={(e: any) => handleSubmit(e)}>
           <input
             type="number"
             min="1"
             max="10"
             value={amount}
-            onChange={(e) => handleChange(e)}
+            onChange={(e: any) => handleChange(e)}
           />
           <button className="button w-100">Add to cart</button>
         </form>

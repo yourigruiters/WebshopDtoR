@@ -1,7 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { CartProduct as CartProductType } from "../../defaultTypes";
 import CartProduct from "../products/CartProduct";
 
-const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
+interface IProps {
+  cart: CartProductType[];
+  changeProductAmount: (id: number, amount: number) => void;
+  removeFromCart: (id: number) => void;
+}
+
+const Cart: React.FC<IProps> = ({
+  cart,
+  changeProductAmount,
+  removeFromCart,
+}) => {
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
 
@@ -18,10 +29,10 @@ const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
       });
 
     setAmount(amount);
-    setTotal(total.toFixed(2));
+    setTotal(total);
   }, [cart]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     alert("Unavailable");
@@ -48,14 +59,11 @@ const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
                 </thead>
                 <tbody>
                   {cart.length ? (
-                    cart.map((product) => {
-                      console.log(product);
-                      console.log(product.product.id);
-                      console.log("######################");
+                    cart.map((cartProduct) => {
                       return (
                         <CartProduct
-                          key={product.product.id}
-                          product={product}
+                          key={cartProduct.product.id}
+                          cartProduct={cartProduct}
                           changeProductAmount={changeProductAmount}
                           removeFromCart={removeFromCart}
                         />
@@ -63,7 +71,7 @@ const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
                     })
                   ) : (
                     <tr>
-                      <td colSpan="5">Nothing in cart...</td>
+                      <td colSpan={5}>Nothing in cart...</td>
                     </tr>
                   )}
                 </tbody>
@@ -90,7 +98,7 @@ const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
                   </tr>
                 </thead>
               </table>
-              <form onSubmit={(e) => handleSubmit(e)}>
+              <form onSubmit={(e: any) => handleSubmit(e)}>
                 <button className="button w-100 no-styles mt-2">
                   Checkout
                 </button>

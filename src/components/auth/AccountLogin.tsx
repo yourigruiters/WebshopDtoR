@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 
-const AccountLogin = () => {
+interface IProps {}
+
+const AccountLogin: React.FC<IProps> = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     alert("Unavailable");
@@ -26,14 +28,14 @@ const AccountLogin = () => {
       <h3>
         Already registered? <strong>Login here!</strong>
       </h3>
-      <form className="pt-3" onSubmit={(e) => handleSubmit(e)}>
+      <form className="pt-3" onSubmit={(e: any) => handleSubmit(e)}>
         <label>E-mail/Username</label>
-        <input type="email" id="email" onChange={(e) => handleChange(e)} />
+        <input type="email" id="email" onChange={(e: any) => handleChange(e)} />
         <label>Password</label>
         <input
           type="password"
           id="password"
-          onChange={(e) => handleChange(e)}
+          onChange={(e: any) => handleChange(e)}
         />
         <button className="button">Login</button>
       </form>

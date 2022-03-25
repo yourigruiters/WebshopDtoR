@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { Product as ProductType } from "../../defaultTypes";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
-const Product = ({ product, addToCart }) => {
+interface IProps {
+  product: ProductType;
+  addToCart: (newProduct: ProductType, amount: number) => boolean;
+}
+
+const Product: React.FC<IProps> = ({ product, addToCart }) => {
   const [amount, setAmount] = useState(1);
   const [error, setError] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setAmount(parseInt(e.target.value));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
     const result = addToCart(product, amount);
@@ -32,13 +38,13 @@ const Product = ({ product, addToCart }) => {
           <span className="error">{error ? "- " + error : ""}</span>
         </h6>
         <div>
-          <form onSubmit={(e) => handleSubmit(e)}>
+          <form onSubmit={(e: any) => handleSubmit(e)}>
             <input
               type="number"
               min="1"
               max="10"
               value={amount}
-              onChange={(e) => handleChange(e)}
+              onChange={(e: any) => handleChange(e)}
             />
             <button className="button cartbutton">Add to cart</button>
           </form>

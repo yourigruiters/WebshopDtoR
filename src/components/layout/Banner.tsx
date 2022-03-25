@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { CartProduct } from "../../defaultTypes";
 import Logo from "../../images/logo/logotype_pantheon_genetics_gold_transparent.png";
 
-const Banner = ({ cart }) => {
+interface IProps {
+  cart: CartProduct[];
+}
+
+const Banner: React.FC<IProps> = ({ cart }) => {
   return (
     <div className="banner" id="banner">
       <div className="container">
