@@ -19,7 +19,7 @@ const CompleteProduct = ({ products, addToCart, match }) => {
     );
 
     setProduct(currentProduct);
-  }, []);
+  }, [match.params.id, products]);
 
   const handleChange = (e) => {
     setAmount(parseInt(e.target.value));

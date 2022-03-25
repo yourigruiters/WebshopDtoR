@@ -76,7 +76,7 @@ const Shop = ({ products, addToCart }) => {
                     if (product.title.includes(search)) {
                       return (
                         <Product
-                          key={product.id}
+                          key={product.product.id}
                           product={product}
                           addToCart={addToCart}
                         />

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import Home from "./components/Home";
@@ -11,7 +11,6 @@ import Login from "./components/auth/Login";
 import Cart from "./components/cart/Cart";
 import Error404 from "./components/error/Error404";
 import "./App.css";
-import { useEffect } from "react";
 
 const products = [
   { id: 1, title: "Product 1", content: "Content...", price: 39.99 },
@@ -23,12 +22,10 @@ const products = [
 const App = () => {
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    console.log(cart);
-  }, [cart]);
-
   const addToCart = (newProduct, amount) => {
-    const product = cart.find((cartItem) => cartItem.id === newProduct.id);
+    const product = cart.find(
+      (cartItem) => cartItem.product.id === newProduct.id
+    );
 
     if (!product) {
       setCart([...cart, { product: newProduct, amount }]);
@@ -39,10 +36,20 @@ const App = () => {
   };
 
   const changeProductAmount = (id, amount) => {
-    const ProductIndex = cart.findIndex(
+    const productIndex = cart.findIndex(
       (cartItem) => cartItem.product.id === id
     );
-    const newCart = [...cart, (cart[ProductIndex].amount = amount)];
+    // const newProduct = { ...cart[productIndex], amount: amount };
+
+    // console.log(newProduct);
+    // const newCart = [...cart, (cart[productIndex].amount = amount)];
+
+    // console.log("newCart", newCart);
+
+    let newCart = cart;
+    console.log(newCart);
+    newCart[productIndex].amount = amount;
+    console.log(newCart);
 
     setCart(newCart);
   };
@@ -54,56 +61,45 @@ const App = () => {
   };
 
   return (
-    <BrowserRouter>
-      <div className="webshop">
-        <Header cart={cart} />
-        <Switch>
-          <Route
-            path="/"
-            exact
-            render={(props) => (
-              <Home {...props} products={products} addToCart={addToCart} />
-            )}
-          />
-          <Route
-            path="/shop"
-            exact
-            render={(props) => (
-              <Shop {...props} products={products} addToCart={addToCart} />
-            )}
-          />
-          <Route
-            path="/shop/:id"
-            exact
-            render={(props) => (
-              <CompleteProduct
-                {...props}
-                products={products}
-                addToCart={addToCart}
-              />
-            )}
-          />
-          <Route path="/about" exact component={About} />
-          <Route path="/contact" exact component={Contact} />
-          <Route path="/login" exact component={Login} />
-          <Route
-            path="/cart"
-            exact
-            render={(props) => (
-              <Cart
-                {...props}
-                cart={cart}
-                addToCart={addToCart}
-                changeProductAmount={changeProductAmount}
-                removeFromCart={removeFromCart}
-              />
-            )}
-          />
-          <Route path="/" component={Error404} />
-        </Switch>
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <div className="webshop">
+      <Header cart={cart} />
+      <Routes>
+        <Route
+          path="/"
+          exact
+          element={<Home products={products} addToCart={addToCart} />}
+        />
+        <Route
+          path="/shop"
+          exact
+          element={<Shop products={products} addToCart={addToCart} />}
+        />
+        <Route
+          path="/shop/:id"
+          exact
+          element={
+            <CompleteProduct products={products} addToCart={addToCart} />
+          }
+        />
+        <Route path="/about" exact element={<About />} />
+        <Route path="/contact" exact element={<Contact />} />
+        <Route path="/login" exact element={<Login />} />
+        <Route
+          path="/cart"
+          exact
+          element={
+            <Cart
+              cart={cart}
+              addToCart={addToCart}
+              changeProductAmount={changeProductAmount}
+              removeFromCart={removeFromCart}
+            />
+          }
+        />
+        <Route path="/" element={<Error404 />} />
+      </Routes>
+      <Footer />
+    </div>
   );
 };
 

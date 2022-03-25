@@ -482,6 +482,7 @@ header nav .hamburger svg {
 
 .error {
   color: red;
+  cursor: pointer;
 }
 
 .filters {

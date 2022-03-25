@@ -6,6 +6,7 @@ const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
+    console.log(cart);
     let amount = 0;
     let total = 0;
 
@@ -18,7 +19,7 @@ const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
 
     setAmount(amount);
     setTotal(total.toFixed(2));
-  }, []);
+  }, [cart]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,9 +49,12 @@ const Cart = ({ cart, changeProductAmount, removeFromCart }) => {
                 <tbody>
                   {cart.length ? (
                     cart.map((product) => {
+                      console.log(product);
+                      console.log(product.product.id);
+                      console.log("######################");
                       return (
                         <CartProduct
-                          key={product.id}
+                          key={product.product.id}
                           product={product}
                           changeProductAmount={changeProductAmount}
                           removeFromCart={removeFromCart}

@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const CompleteProduct = ({ product, changeProductAmount, removeFromCart }) => {
+  const [amount, setAmount] = useState(0);
+
+  useEffect(() => {
+    setAmount(product.amount);
+  }, [product]);
+
   const handleChange = (e) => {
     changeProductAmount(product.product.id, parseInt(e.target.value));
   };
-
-  console.log(product.product.total, product.amount);
 
   return (
     <tr>
@@ -15,7 +19,7 @@ const CompleteProduct = ({ product, changeProductAmount, removeFromCart }) => {
           type="number"
           min="1"
           max="10"
-          value={product.amount}
+          value={amount}
           onChange={(e) => handleChange(e)}
         />
       </td>
