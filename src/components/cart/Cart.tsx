@@ -17,6 +17,7 @@ const Cart: React.FC<IProps> = ({
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
+    console.log("changes");
     let amount = 0;
     let total = 0;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { CartProduct } from "../../typings/defaultTypes";
 
 interface IProps {
@@ -12,12 +12,6 @@ const CompleteProduct: React.FC<IProps> = ({
   changeProductAmount,
   removeFromCart,
 }) => {
-  const [amount, setAmount] = useState(0);
-
-  useEffect(() => {
-    setAmount(cartProduct.amount);
-  }, [cartProduct]);
-
   const handleChange = (e: any) => {
     changeProductAmount(cartProduct.product.id, parseInt(e.target.value));
   };
@@ -30,7 +24,7 @@ const CompleteProduct: React.FC<IProps> = ({
           type="number"
           min="1"
           max="10"
-          value={amount}
+          value={cartProduct.amount}
           onChange={(e: any) => handleChange(e)}
         />
       </td>

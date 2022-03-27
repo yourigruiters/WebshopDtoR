@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CartProduct, Product } from "../../typings/defaultTypes";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
@@ -7,15 +7,9 @@ interface IProps {
   products: Product[];
   cart: CartProduct[];
   addToCart: (product: Product, amount: number) => void;
-  match?: any;
 }
 
-const CompleteProduct: React.FC<IProps> = ({
-  products,
-  cart,
-  addToCart,
-  match,
-}) => {
+const CompleteProduct: React.FC<IProps> = ({ products, cart, addToCart }) => {
   const [amount, setAmount] = useState<number>(1);
   const [error, setError] = useState<string>("");
   const [product, setProduct] = useState<Product>({
@@ -25,16 +19,19 @@ const CompleteProduct: React.FC<IProps> = ({
     price: 0,
   });
 
-  useEffect(() => {
-    const urlProductID = parseInt(match.params.id);
-    const currentProduct = products.find(
-      (product) => product.id === urlProductID
-    );
+  const urlProductID = useParams().id;
 
-    if (currentProduct) {
-      setProduct(currentProduct);
+  useEffect(() => {
+    if (urlProductID) {
+      const currentProduct = products.find(
+        (product) => product.id === parseInt(urlProductID)
+      );
+
+      if (currentProduct) {
+        setProduct(currentProduct);
+      }
     }
-  }, [match.params.id, products]);
+  }, [urlProductID, products]);
 
   const handleChange = (e: any) => {
     setAmount(parseInt(e.target.value));
