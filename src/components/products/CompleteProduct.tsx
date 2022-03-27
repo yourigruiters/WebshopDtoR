@@ -6,7 +6,7 @@ import ProductImage from "../../images/temp/temp-product.jpg";
 interface IProps {
   products: Product[];
   cart: CartProduct[];
-  addToCart: (product: Product, amount: number) => void;
+  addToCart: (id: number, amount: number) => void;
 }
 
 const CompleteProduct: React.FC<IProps> = ({ products, cart, addToCart }) => {
@@ -41,7 +41,7 @@ const CompleteProduct: React.FC<IProps> = ({ products, cart, addToCart }) => {
     e.preventDefault();
 
     const foundProduct = cart.find(
-      (cartItem) => cartItem.product.id === product.id
+      (cartItem) => cartItem.productID === product.id
     );
 
     if (foundProduct) {
@@ -50,7 +50,7 @@ const CompleteProduct: React.FC<IProps> = ({ products, cart, addToCart }) => {
     }
 
     setError("");
-    addToCart(product, amount);
+    addToCart(product.id, amount);
   };
 
   return (

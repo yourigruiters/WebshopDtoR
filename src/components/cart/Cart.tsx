@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { CartProduct as CartProductType } from "../../typings/defaultTypes";
+import {
+  CartProduct as CartProductType,
+  Product,
+} from "../../typings/defaultTypes";
 import CartProduct from "../products/CartProduct";
 
 interface IProps {
   cart: CartProductType[];
+  products: Product[];
   changeProductAmount: (id: number, amount: number) => void;
   removeFromCart: (id: number) => void;
 }
 
 const Cart: React.FC<IProps> = ({
   cart,
+  products,
   changeProductAmount,
   removeFromCart,
 }) => {
@@ -17,15 +22,19 @@ const Cart: React.FC<IProps> = ({
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    console.log("changes");
     let amount = 0;
     let total = 0;
 
     cart &&
       cart.map((cartProduct) => {
-        total = total + cartProduct.product.price * cartProduct.amount;
-        amount = amount + cartProduct.amount;
-        return cartProduct.product.price;
+        const product = products.find(
+          (product) => product.id === cartProduct.productID
+        );
+
+        if (product) {
+          total = total + product.price * cartProduct.amount;
+          amount = amount + cartProduct.amount;
+        }
       });
 
     setAmount(amount);
@@ -60,9 +69,14 @@ const Cart: React.FC<IProps> = ({
                 <tbody>
                   {cart.length ? (
                     cart.map((cartProduct) => {
+                      const product = products.find(
+                        (product) => product.id === cartProduct.productID
+                      );
+
                       return (
                         <CartProduct
-                          key={cartProduct.product.id}
+                          key={cartProduct.productID}
+                          product={product}
                           cartProduct={cartProduct}
                           changeProductAmount={changeProductAmount}
                           removeFromCart={removeFromCart}
@@ -93,7 +107,7 @@ const Cart: React.FC<IProps> = ({
                   <tr>
                     <td>Total Price</td>
                     <td>
-                      <strong>$ {total}</strong>
+                      <strong>$ {total.toFixed(2)}</strong>
                     </td>
                   </tr>
                 </thead>

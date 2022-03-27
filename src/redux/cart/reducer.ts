@@ -17,7 +17,7 @@ const themeReducer = (state = initialState, action: ReduxActionState) => {
     case ADD_TO_CART: {
       const newCart = [
         ...state.cart,
-        { product: action.payload.product, amount: action.payload.amount },
+        { productID: action.payload.id, amount: action.payload.amount },
       ];
 
       return {
@@ -27,18 +27,13 @@ const themeReducer = (state = initialState, action: ReduxActionState) => {
     }
 
     case CHANGE_PRODUCT_AMOUNT: {
-      console.log("old", state.cart);
-      const productIndex = state.cart.findIndex(
-        (cartItem) => cartItem.product.id === action.payload.id
-      );
+      const newCart = state.cart.filter((cartItem) => {
+        if (cartItem.productID === action.payload.id) {
+          cartItem.amount = action.payload.amount;
+        }
 
-      console.log(productIndex);
-
-      let newCart = state.cart;
-      newCart[productIndex].amount = action.payload.amount;
-
-      console.log("old", state.cart);
-      console.log("new", newCart);
+        return cartItem;
+      });
 
       return {
         ...state,
@@ -48,7 +43,7 @@ const themeReducer = (state = initialState, action: ReduxActionState) => {
 
     case REMOVE_FROM_CART: {
       const newCart = state.cart.filter(
-        (cartItem) => cartItem.product.id !== action.payload
+        (cartItem) => cartItem.productID !== action.payload.id
       );
 
       return {

@@ -1,10 +1,9 @@
-import { Product } from "../../typings/defaultTypes";
 import { ADD_TO_CART, CHANGE_PRODUCT_AMOUNT, REMOVE_FROM_CART } from "./types";
 
-export const addToCart = (product: Product, amount: number) => ({
+export const addToCart = (id: number, amount: number) => ({
   type: ADD_TO_CART,
   payload: {
-    product,
+    id,
     amount,
   },
 });
@@ -19,5 +18,5 @@ export const changeProductAmount = (id: number, amount: number) => ({
 
 export const removeFromCart = (id: number) => ({
   type: REMOVE_FROM_CART,
-  payload: id,
+  payload: { id },
 });

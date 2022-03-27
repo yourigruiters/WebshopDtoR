@@ -9,7 +9,7 @@ import ProductImage from "../../images/temp/temp-product.jpg";
 interface IProps {
   product: ProductType;
   cart: CartProduct[];
-  addToCart: (product: ProductType, amount: number) => void;
+  addToCart: (id: number, amount: number) => void;
 }
 
 const Product: React.FC<IProps> = ({ product, cart, addToCart }) => {
@@ -24,7 +24,7 @@ const Product: React.FC<IProps> = ({ product, cart, addToCart }) => {
     e.preventDefault();
 
     const foundProduct = cart.find(
-      (cartItem) => cartItem.product.id === product.id
+      (cartItem) => cartItem.productID === product.id
     );
 
     if (foundProduct) {
@@ -33,7 +33,7 @@ const Product: React.FC<IProps> = ({ product, cart, addToCart }) => {
     }
 
     setError("");
-    addToCart(product, amount);
+    addToCart(product.id, amount);
   };
 
   return (

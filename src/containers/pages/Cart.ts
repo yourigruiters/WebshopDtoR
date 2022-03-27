@@ -6,10 +6,12 @@ import {
   changeProductAmount,
   removeFromCart,
 } from "./../../redux/cart/actions";
+import { selectProducts } from "../../redux/products/selectors";
 
 const mapStateToProps = (state: ReduxState) => {
   return {
     cart: selectCart(state),
+    products: selectProducts(state),
   };
 };
 

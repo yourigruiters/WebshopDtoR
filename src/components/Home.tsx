@@ -6,7 +6,7 @@ import FeaturedProduct from "./products/FeaturedProduct";
 interface IProps {
   randomProduct: Product | undefined;
   cart: CartProduct[];
-  addToCart: (product: Product, amount: number) => void;
+  addToCart: (id: number, amount: number) => void;
 }
 
 const Home: React.FC<IProps> = ({ randomProduct, cart, addToCart }) => {

@@ -5,7 +5,7 @@ import Product from "./products/Product";
 interface IProps {
   products: ProductType[];
   cart: CartProduct[];
-  addToCart: (product: ProductType, amount: number) => void;
+  addToCart: (id: number, amount: number) => void;
 }
 
 const Shop: React.FC<IProps> = ({ products, cart, addToCart }) => {

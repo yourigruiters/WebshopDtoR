@@ -1,24 +1,26 @@
 import React from "react";
-import { CartProduct } from "../../typings/defaultTypes";
+import { CartProduct, Product } from "../../typings/defaultTypes";
 
 interface IProps {
+  product: Product | undefined;
   cartProduct: CartProduct;
   changeProductAmount: (id: number, amount: number) => void;
   removeFromCart: (id: number) => void;
 }
 
 const CompleteProduct: React.FC<IProps> = ({
+  product,
   cartProduct,
   changeProductAmount,
   removeFromCart,
 }) => {
   const handleChange = (e: any) => {
-    changeProductAmount(cartProduct.product.id, parseInt(e.target.value));
+    changeProductAmount(cartProduct.productID, parseInt(e.target.value));
   };
 
-  return (
+  return product ? (
     <tr>
-      <td>{cartProduct.product.title}</td>
+      <td>{product?.title}</td>
       <td>
         <input
           type="number"
@@ -28,18 +30,22 @@ const CompleteProduct: React.FC<IProps> = ({
           onChange={(e: any) => handleChange(e)}
         />
       </td>
-      <td>{cartProduct.product.price}</td>
+      <td>{product?.price}</td>
       <td>
-        <strong>{cartProduct.product.price * cartProduct.amount}</strong>
+        <strong>{(product?.price * cartProduct.amount).toFixed(2)}</strong>
       </td>
       <td
         className="error"
         onClick={() => {
-          removeFromCart(cartProduct.product.id);
+          removeFromCart(cartProduct.productID);
         }}
       >
         Delete
       </td>
+    </tr>
+  ) : (
+    <tr>
+      <td colSpan={5}>No product found</td>
     </tr>
   );
 };
