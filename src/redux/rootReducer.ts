@@ -3,7 +3,7 @@ import cartReducer from "./cart/reducer";
 import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-  theme: productsReducer,
+  products: productsReducer,
   cart: cartReducer,
 });
 

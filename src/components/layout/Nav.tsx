@@ -1,13 +1,12 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { CartProduct } from "../../typings/defaultTypes";
 import Logo from "../../images/logo/logomark_pantheon_genetics_gold_transparent.png";
 
 interface IProps {
-  cart: CartProduct[];
+  cartSize: number;
 }
 
-const Nav: React.FC<IProps> = ({ cart }) => {
+const Nav: React.FC<IProps> = ({ cartSize }) => {
   return (
     <nav id="navbar" className="bg-white">
       <div className="container">
@@ -59,7 +58,7 @@ const Nav: React.FC<IProps> = ({ cart }) => {
               <span>
                 <i className="fas fa-shopping-cart first"></i>
               </span>
-              <strong> {cart.length}</strong>
+              <strong> {cartSize}</strong>
             </p>
           </Link>
         </div>

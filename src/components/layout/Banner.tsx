@@ -1,13 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { CartProduct } from "../../typings/defaultTypes";
 import Logo from "../../images/logo/logotype_pantheon_genetics_gold_transparent.png";
 
 interface IProps {
-  cart: CartProduct[];
+  cartSize: number;
 }
 
-const Banner: React.FC<IProps> = ({ cart }) => {
+const Banner: React.FC<IProps> = ({ cartSize }) => {
   return (
     <div className="banner" id="banner">
       <div className="container">
@@ -45,7 +44,7 @@ const Banner: React.FC<IProps> = ({ cart }) => {
                 <span>
                   <i className="fas fa-shopping-cart third"></i>
                 </span>
-                <strong>Shopping</strong> cart ({cart.length})
+                <strong>Shopping</strong> cart ({cartSize})
               </Link>
             </p>
           </div>

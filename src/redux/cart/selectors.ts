@@ -7,3 +7,5 @@ const selectCartData = (state: ReduxState) => get(state, "cart");
 export const selectCart = createSelector(selectCartData, (cartData) =>
   get(cartData, "cart")
 );
+
+export const selectCartSize = createSelector(selectCart, (cart) => cart.length);

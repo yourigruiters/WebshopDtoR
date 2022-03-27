@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Product } from "../../typings/defaultTypes";
+import { CartProduct, Product } from "../../typings/defaultTypes";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
 interface IProps {
-  products: Product[];
-  addToCart: (newProduct: Product, amount: number) => boolean;
+  randomProduct: Product | undefined;
+  cart: CartProduct[];
+  addToCart: (product: Product, amount: number) => void;
 }
 
-const CompleteProduct: React.FC<IProps> = ({ products, addToCart }) => {
+const CompleteProduct: React.FC<IProps> = ({
+  randomProduct,
+  cart,
+  addToCart,
+}) => {
   const [amount, setAmount] = useState<number>(1);
   const [error, setError] = useState<string>("");
   const [product, setProduct] = useState<Product>({
@@ -19,13 +24,10 @@ const CompleteProduct: React.FC<IProps> = ({ products, addToCart }) => {
   });
 
   useEffect(() => {
-    const random = Math.floor(Math.random() * products.length) + 1;
-    const currentProduct = products.find((product) => product.id === random);
-
-    if (currentProduct) {
-      setProduct(currentProduct);
+    if (randomProduct) {
+      setProduct(randomProduct);
     }
-  }, [products]);
+  }, [randomProduct]);
 
   const handleChange = (e: any) => {
     setAmount(parseInt(e.target.value));
@@ -34,11 +36,17 @@ const CompleteProduct: React.FC<IProps> = ({ products, addToCart }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    const result = addToCart(product, amount);
+    const foundProduct = cart.find(
+      (cartItem) => cartItem.product.id === product.id
+    );
 
-    if (!result) {
+    if (foundProduct) {
       setError("Already in cart");
+      return;
     }
+
+    setError("");
+    addToCart(product, amount);
   };
 
   return (

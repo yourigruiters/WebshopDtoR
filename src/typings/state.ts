@@ -3,7 +3,7 @@ import { ProductsState } from "../redux/products/reducer";
 import { CartState } from "../redux/cart/reducer";
 
 export interface ReduxState {
-  product: ProductsState;
+  products: ProductsState;
   cart: CartState;
 }
 

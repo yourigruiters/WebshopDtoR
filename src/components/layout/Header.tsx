@@ -1,17 +1,16 @@
 import React from "react";
-import { CartProduct } from "../../typings/defaultTypes";
 import Banner from "./Banner";
 import Nav from "./Nav";
 
 interface IProps {
-  cart: CartProduct[];
+  cartSize: number;
 }
 
-const Header: React.FC<IProps> = ({ cart }) => {
+const Header: React.FC<IProps> = ({ cartSize }) => {
   return (
     <header id="top">
-      <Banner cart={cart} />
-      <Nav cart={cart} />
+      <Banner cartSize={cartSize} />
+      <Nav cartSize={cartSize} />
     </header>
   );
 };

@@ -24,7 +24,7 @@ $(document).ready(function () {
 
 // SmoothScroll to anchor points //
 $(document).ready(function () {
-  $("a").on("click", function (e: any) {
+  $("a").on("click", function (e) {
     if (this.hash !== "") {
       e.preventDefault();
       var hash = this.hash;

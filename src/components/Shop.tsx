@@ -1,13 +1,14 @@
 import React, { useState } from "react";
-import { Product as ProductType } from "../typings/defaultTypes";
+import { CartProduct, Product as ProductType } from "../typings/defaultTypes";
 import Product from "./products/Product";
 
 interface IProps {
   products: ProductType[];
-  addToCart: (newProduct: ProductType, amount: number) => boolean;
+  cart: CartProduct[];
+  addToCart: (product: ProductType, amount: number) => void;
 }
 
-const Shop: React.FC<IProps> = ({ products, addToCart }) => {
+const Shop: React.FC<IProps> = ({ products, cart, addToCart }) => {
   const [allProducts, setAllProducts] = useState(products);
   const [search, setSearch] = useState("");
 
@@ -84,6 +85,7 @@ const Shop: React.FC<IProps> = ({ products, addToCart }) => {
                         <Product
                           key={product.id}
                           product={product}
+                          cart={cart}
                           addToCart={addToCart}
                         />
                       );

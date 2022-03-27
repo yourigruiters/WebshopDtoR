@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Product as ProductType } from "../../typings/defaultTypes";
+import {
+  CartProduct,
+  Product as ProductType,
+} from "../../typings/defaultTypes";
 import ProductImage from "../../images/temp/temp-product.jpg";
 
 interface IProps {
   product: ProductType;
-  addToCart: (newProduct: ProductType, amount: number) => boolean;
+  cart: CartProduct[];
+  addToCart: (product: ProductType, amount: number) => void;
 }
 
-const Product: React.FC<IProps> = ({ product, addToCart }) => {
+const Product: React.FC<IProps> = ({ product, cart, addToCart }) => {
   const [amount, setAmount] = useState(1);
   const [error, setError] = useState("");
 
@@ -19,11 +23,17 @@ const Product: React.FC<IProps> = ({ product, addToCart }) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    const result = addToCart(product, amount);
+    const foundProduct = cart.find(
+      (cartItem) => cartItem.product.id === product.id
+    );
 
-    if (!result) {
+    if (foundProduct) {
       setError("Already in cart");
+      return;
     }
+
+    setError("");
+    addToCart(product, amount);
   };
 
   return (

@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Product } from "../typings/defaultTypes";
+import { CartProduct, Product } from "../typings/defaultTypes";
 import FeaturedProduct from "./products/FeaturedProduct";
 
 interface IProps {
-  products: Product[];
-  addToCart: (newProduct: Product, amount: number) => boolean;
+  randomProduct: Product | undefined;
+  cart: CartProduct[];
+  addToCart: (product: Product, amount: number) => void;
 }
 
-const Home: React.FC<IProps> = ({ products, addToCart }) => {
+const Home: React.FC<IProps> = ({ randomProduct, cart, addToCart }) => {
   return (
     <div>
       <div>
@@ -32,7 +33,11 @@ const Home: React.FC<IProps> = ({ products, addToCart }) => {
               </div>
             </div>
           </div>
-          <FeaturedProduct products={products} addToCart={addToCart} />
+          <FeaturedProduct
+            randomProduct={randomProduct}
+            cart={cart}
+            addToCart={addToCart}
+          />
         </div>
       </div>
     </div>
