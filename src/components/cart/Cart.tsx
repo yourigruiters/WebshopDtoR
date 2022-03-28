@@ -4,6 +4,8 @@ import {
   Product,
 } from "../../typings/defaultTypes";
 import CartProduct from "../products/CartProduct";
+import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import axios from "axios";
 
 interface IProps {
   cart: CartProductType[];
@@ -18,15 +20,19 @@ const Cart: React.FC<IProps> = ({
   changeProductAmount,
   removeFromCart,
 }) => {
+  const [succes, setSucces] = useState(false);
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
+
+  const stripe = useStripe();
+  const elements = useElements();
 
   useEffect(() => {
     let amount = 0;
     let total = 0;
 
     cart &&
-      cart.map((cartProduct) => {
+      cart.forEach((cartProduct) => {
         const product = products.find(
           (product) => product.id === cartProduct.productID
         );
@@ -39,12 +45,36 @@ const Cart: React.FC<IProps> = ({
 
     setAmount(amount);
     setTotal(total);
-  }, [cart]);
+  }, [cart, products]);
 
-  const handleSubmit = (e: any) => {
+  if (!stripe || !elements) return null;
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    alert("Unavailable");
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card: elements.getElement(CardElement) as any,
+    });
+
+    if (!error) {
+      try {
+        const { id } = paymentMethod;
+        const response = await axios.post("http://localhost:4000/payment", {
+          amount: 1000,
+          id,
+        });
+
+        if (response.data.success) {
+          console.log("Succesful payment");
+          setSucces(true);
+        }
+      } catch (err) {
+        console.log("erro", err);
+      }
+    } else {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -112,11 +142,14 @@ const Cart: React.FC<IProps> = ({
                   </tr>
                 </thead>
               </table>
-              <form onSubmit={(e: any) => handleSubmit(e)}>
-                <button className="button w-100 no-styles mt-2">
-                  Checkout
-                </button>
-              </form>
+              {!succes ? (
+                <form onSubmit={(e: any) => handleSubmit(e)}>
+                  <CardElement />
+                  <button className="button w-100 no-styles mt-2">Pay</button>
+                </form>
+              ) : (
+                <div>Ole</div>
+              )}
             </div>
           </div>
         </div>
