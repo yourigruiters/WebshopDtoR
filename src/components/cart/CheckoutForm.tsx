@@ -24,6 +24,7 @@ const CheckoutForm: React.FC<IProps> = ({ amount, total }) => {
     if (!stripe || !elements) return;
 
     setIsLoading(true);
+    setMessage("Processing order...");
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -69,7 +70,7 @@ const CheckoutForm: React.FC<IProps> = ({ amount, total }) => {
         {isLoading && (
           <div className="overlay">
             <div className="charging"></div>
-            <p>Processing order...</p>
+            <p>{message}</p>
           </div>
         )}
       </div>

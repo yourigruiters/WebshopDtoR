@@ -5,7 +5,7 @@ import Footer from "./components/layout/Footer";
 import Home from "./containers/pages/Home";
 import Shop from "./containers/pages/Shop";
 import About from "./components/About";
-import Payment from "./components/Payment";
+import Payment from "./containers/pages/Payment";
 import Contact from "./components/Contact";
 import CompleteProduct from "./containers/components/CompleteProduct";
 import Login from "./components/auth/Login";

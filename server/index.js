@@ -16,8 +16,6 @@ app.use(cors());
 app.post("/create-payment-intent", cors(), async (req, res) => {
   let { amount } = req.body;
 
-  console.log("test");
-
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount,
@@ -27,13 +25,10 @@ app.post("/create-payment-intent", cors(), async (req, res) => {
       },
     });
 
-    console.log("ole");
-
     res.send({
       clientSecret: paymentIntent.client_secret,
     });
   } catch (error) {
-    console.log(error);
     res.json({
       message: "Payment failed",
       success: false,

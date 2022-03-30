@@ -8,6 +8,7 @@ import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { useNavigate } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51KiLz6BRtCL2UFepMEpbe9lZZOjl4sPW6cly6PkeGebrOZmURexs7glgsm9rhGFee9JeywQefavidsj4hmjt7vHw00RSoiCrvE"
@@ -23,9 +24,13 @@ const Checkout: React.FC<IProps> = ({ cart, products }) => {
   const [total, setTotal] = useState(0);
   const [clientSecret, setClientSecret] = useState("");
 
+  const navigate = useNavigate();
+
   useEffect(() => {
-    console.log(clientSecret);
-  }, [clientSecret]);
+    if (!cart.length) {
+      navigate("/cart");
+    }
+  });
 
   useEffect(() => {
     let amt = 0;
@@ -45,8 +50,6 @@ const Checkout: React.FC<IProps> = ({ cart, products }) => {
 
     setAmount(amt);
     setTotal(ttl);
-
-    console.log(ttl);
 
     axios
       .post("http://localhost:4000/create-payment-intent", {

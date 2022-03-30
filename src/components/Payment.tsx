@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { CartProduct } from "../typings/defaultTypes";
 
-interface IProps {}
+interface IProps {
+  cart: CartProduct[];
+  removeFromCart: (id: number) => void;
+}
 
-const Payment: React.FC<IProps> = () => {
+const Payment: React.FC<IProps> = ({ cart, removeFromCart }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    cart.forEach((cartProduct) => {
+      removeFromCart(cartProduct.productID);
+    });
+  }, [cart, navigate, removeFromCart]);
+
   return (
     <div id="content">
       <div className="container">
