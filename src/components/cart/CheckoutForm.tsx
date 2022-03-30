@@ -1,38 +1,6 @@
 import React, { useState, useEffect } from "react";
-import {
-  CartProduct as CartProductType,
-  Product,
-} from "../../typings/defaultTypes";
-import CartProduct from "../products/CartProduct";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
-
-const stripePromise = loadStripe(
-  "pk_test_51KiLz6BRtCL2UFepMEpbe9lZZOjl4sPW6cly6PkeGebrOZmURexs7glgsm9rhGFee9JeywQefavidsj4hmjt7vHw00RSoiCrvE"
-);
-
-const CARD_ELEMENT_OPTIONS = {
-  style: {
-    base: {
-      color: "#32325d",
-      fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-      fontSmoothing: "antialiased",
-      fontSize: "16px",
-      "::placeholder": {
-        color: "#aab7c4",
-      },
-      border: "1px solid #adadad",
-      padding: "15px!important",
-    },
-    invalid: {
-      color: "#fa755a",
-      iconColor: "#fa755a",
-    },
-  },
-};
+import { PaymentElement } from "@stripe/react-stripe-js";
+import { useElements, useStripe } from "@stripe/react-stripe-js";
 
 interface IProps {
   amount: number;
@@ -40,53 +8,38 @@ interface IProps {
 }
 
 const CheckoutForm: React.FC<IProps> = ({ amount, total }) => {
-  const [succes, setSucces] = useState(false);
-  const [charging, setCharging] = useState(false);
-  const [clientSecret, setClientSecret] = useState("");
-  const navigate = useNavigate();
+  const [message, setMessage] = useState<string | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const stripe = useStripe();
+  const elements = useElements();
 
   useEffect(() => {
-    if (succes) {
-      navigate("/payment");
-    }
-  }, [succes, navigate]);
+    if (!stripe || !elements) return;
+  }, [stripe, elements]);
 
   const handleSubmit = async (e: any) => {
-    await e.preventDefault();
-    setCharging(true);
+    e.preventDefault();
+
+    if (!stripe || !elements) return;
+
+    setIsLoading(true);
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: "http://localhost:3000/payment",
+      },
+    });
+
+    if (error.type === "card_error" || error.type === "validation_error") {
+      setMessage(error.message);
+    } else {
+      setMessage("An unexpected error occured.");
+    }
+
+    setIsLoading(false);
   };
-
-  //   const handleSubmit = async (e: any) => {
-  //     e.preventDefault();
-  //     setCharging(true);
-
-  //     const { error, paymentMethod } = await stripe.createPaymentMethod({
-  //       type: "card",
-  //       card: elements.getElement(CardElement) as any,
-  //     });
-
-  //     if (!error) {
-  //       try {
-  //         const { id } = paymentMethod;
-  //         const response = await axios.post(
-  //           "http://localhost:4000/card-payment",
-  //           {
-  //             amount: total * 100,
-  //             id,
-  //           }
-  //         );
-
-  //         if (response.data.success) {
-  //           setSucces(true);
-  //         }
-  //       } catch (err) {
-  //         console.log("erro", err);
-  //       }
-  //     } else {
-  //       setCharging(false);
-  //       console.log(error.message);
-  //     }
-  //   };
 
   return (
     <div className="col-12 col-md-9 col-xl-6">
@@ -110,10 +63,10 @@ const CheckoutForm: React.FC<IProps> = ({ amount, total }) => {
           </thead>
         </table>
         <form onSubmit={(e: any) => handleSubmit(e)}>
-          <CardElement options={CARD_ELEMENT_OPTIONS} />
+          <PaymentElement id="payment-element" />
           <button className="button w-100 no-styles mt-2">Pay</button>
         </form>
-        {charging && (
+        {isLoading && (
           <div className="overlay">
             <div className="charging"></div>
             <p>Processing order...</p>
