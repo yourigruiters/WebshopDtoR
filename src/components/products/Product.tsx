@@ -40,7 +40,9 @@ const Product: React.FC<IProps> = ({ product, cart, addToCart }) => {
     <div className="col-12 col-sm-6 col-xl-4 pb-5 fadeIn">
       <div className="product">
         <div className="product-image">
-          <img src={ProductImage} alt="product" className="zoom" />
+          <Link to={`/shop/${product.id}`}>
+            <img src={ProductImage} alt="product" className="zoom" />
+          </Link>
         </div>
         <h4 className="second pb-1">{product.title}</h4>
         <h6 className="second pb-1">

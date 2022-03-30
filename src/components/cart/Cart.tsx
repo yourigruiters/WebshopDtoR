@@ -4,8 +4,7 @@ import {
   Product,
 } from "../../typings/defaultTypes";
 import CartProduct from "../products/CartProduct";
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import axios from "axios";
+import { Link } from "react-router-dom";
 
 interface IProps {
   cart: CartProductType[];
@@ -20,12 +19,8 @@ const Cart: React.FC<IProps> = ({
   changeProductAmount,
   removeFromCart,
 }) => {
-  const [succes, setSucces] = useState(false);
   const [amount, setAmount] = useState(0);
   const [total, setTotal] = useState(0);
-
-  const stripe = useStripe();
-  const elements = useElements();
 
   useEffect(() => {
     let amount = 0;
@@ -47,36 +42,6 @@ const Cart: React.FC<IProps> = ({
     setTotal(total);
   }, [cart, products]);
 
-  if (!stripe || !elements) return null;
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card: elements.getElement(CardElement) as any,
-    });
-
-    if (!error) {
-      try {
-        const { id } = paymentMethod;
-        const response = await axios.post("http://localhost:4000/payment", {
-          amount: 1000,
-          id,
-        });
-
-        if (response.data.success) {
-          console.log("Succesful payment");
-          setSucces(true);
-        }
-      } catch (err) {
-        console.log("erro", err);
-      }
-    } else {
-      console.log(error.message);
-    }
-  };
-
   return (
     <div id="content">
       <div className="container">
@@ -84,12 +49,13 @@ const Cart: React.FC<IProps> = ({
           <div className="col-12">
             <h3>Shopping cart</h3>
           </div>
-          <div className="col-12 col-xl-8">
+          <div className="col-12">
             <div className="shoppingTable mt-5">
               <table className="table">
                 <thead>
                   <tr>
-                    <th>Product details</th>
+                    <th>Image</th>
+                    <th>Product</th>
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Total</th>
@@ -110,19 +76,20 @@ const Cart: React.FC<IProps> = ({
                           cartProduct={cartProduct}
                           changeProductAmount={changeProductAmount}
                           removeFromCart={removeFromCart}
+                          type="cart"
                         />
                       );
                     })
                   ) : (
                     <tr>
-                      <td colSpan={5}>Nothing in cart...</td>
+                      <td colSpan={6}>Nothing in cart...</td>
                     </tr>
                   )}
                 </tbody>
               </table>
             </div>
           </div>
-          <div className="col-12 col-md-6 offset-md-3 col-xl-3 offset-xl-1">
+          <div className="col-12 col-md-9 col-xl-6">
             <div className="shoppingTotal mt-5 p-4">
               <h4>Order summary</h4>
               <hr />
@@ -142,14 +109,11 @@ const Cart: React.FC<IProps> = ({
                   </tr>
                 </thead>
               </table>
-              {!succes ? (
-                <form onSubmit={(e: any) => handleSubmit(e)}>
-                  <CardElement />
-                  <button className="button w-100 no-styles mt-2">Pay</button>
-                </form>
-              ) : (
-                <div>Ole</div>
-              )}
+              <Link to="/checkout">
+                <button className="button w-100 no-styles mt-2">
+                  Proceed to checkout
+                </button>
+              </Link>
             </div>
           </div>
         </div>

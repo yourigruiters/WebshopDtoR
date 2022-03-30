@@ -13,30 +13,51 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.post("/payment", cors(), async (req, res) => {
+app.post("/card-payment", cors(), async (req, res) => {
   let { amount, id } = req.body;
 
-  console.log(amount, id);
-
   try {
-    console.log("pizza");
     const payment = await stripe.paymentIntents.create({
       amount,
-      currency: "USD",
-      description: "Test payment - YG",
+      currency: "eur",
+      description: "Phanteon Genetics - Payment",
       payment_method: id,
       confirm: true,
+      metadata: { integration_check: "accept_a_payment" },
     });
 
-    console.log("paymnet", payment);
+    // console.log("paymnet", payment);
 
     res.json({
       message: "Payment success",
       success: true,
     });
   } catch (error) {
-    console.log("error", error);
+    res.json({
+      message: "Payment failed",
+      success: false,
+    });
+  }
+});
 
+app.post("/create-payment-intent", cors(), async (req, res) => {
+  let { amount } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amount,
+      currency: "eur",
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
+
+    // console.log("paymnet", payment);
+
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
     res.json({
       message: "Payment failed",
       success: false,

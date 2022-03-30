@@ -53,7 +53,9 @@ const CompleteProduct: React.FC<IProps> = ({
     <div className="row">
       <div className="col-12 col-lg-4 mb-4">
         <div className="product-image">
-          <img src={ProductImage} alt="product" className="zoom" />
+          <Link to={`/shop/${product.id}`}>
+            <img src={ProductImage} alt="product" className="zoom" />
+          </Link>
         </div>
       </div>
       <div className="col-12 col-sm-6 col-lg-5 mb-4">
