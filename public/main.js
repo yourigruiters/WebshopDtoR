@@ -7,10 +7,6 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $(window).scroll(function () {
-    // $(document).bind('mousewheel', 'body', function (e: any) {
-    //   $(this).stop();
-    // });
-
     if ($(window).scrollTop() > $("#banner").outerHeight()) {
       $("#navbar").addClass("scrolling");
     }
@@ -20,7 +16,6 @@ $(document).ready(function () {
     }
   });
 });
-// END //
 
 // SmoothScroll to anchor points //
 $(document).ready(function () {
@@ -41,22 +36,6 @@ $(document).ready(function () {
     }
   });
 });
-// END //
-
-// FadeInEffects
-// $(document).ready(function () {
-//   $(window).scroll(function () {
-//     $('.fadeIn').each(function (i) {
-//       var object_top = $(this).offset().top;
-//       var window_top = $(window).scrollTop();
-
-//       if ((object_top - window_top) < 500) {
-//         $(this).animate({ opacity: '1', top: '0px' }, 500);
-//       }
-//     });
-//   });
-// });
-// END //
 
 // Hamburger
 $(document).on("click touch", "#hamburgerToggle", function () {
