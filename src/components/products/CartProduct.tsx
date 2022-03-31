@@ -17,7 +17,7 @@ const CompleteProduct: React.FC<IProps> = ({
   removeFromCart,
   type,
 }) => {
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (type !== "checkout") {
       changeProductAmount &&
         changeProductAmount(cartProduct.productID, parseInt(e.target.value));
@@ -39,7 +39,7 @@ const CompleteProduct: React.FC<IProps> = ({
             min="1"
             max="10"
             value={cartProduct.amount}
-            onChange={(e: any) => handleChange(e)}
+            onChange={handleChange}
           />
         </td>
       )}

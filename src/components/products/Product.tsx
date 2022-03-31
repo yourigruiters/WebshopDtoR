@@ -16,11 +16,11 @@ const Product: React.FC<IProps> = ({ product, cart, addToCart }) => {
   const [amount, setAmount] = useState(1);
   const [error, setError] = useState("");
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(parseInt(e.target.value));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const foundProduct = cart.find(
@@ -50,13 +50,13 @@ const Product: React.FC<IProps> = ({ product, cart, addToCart }) => {
           <span className="error">{error ? "- " + error : ""}</span>
         </h6>
         <div>
-          <form onSubmit={(e: any) => handleSubmit(e)}>
+          <form onSubmit={handleSubmit}>
             <input
               type="number"
               min="1"
               max="10"
               value={amount}
-              onChange={(e: any) => handleChange(e)}
+              onChange={handleChange}
             />
             <button className="button cartbutton">Add to cart</button>
           </form>

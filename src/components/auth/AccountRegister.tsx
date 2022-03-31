@@ -10,11 +10,11 @@ const AccountRegister: React.FC<IProps> = () => {
     repassword: "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAccount({ ...account, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     alert("Unavailable");
@@ -30,23 +30,15 @@ const AccountRegister: React.FC<IProps> = () => {
   return (
     <div className="col-12 col-sm-6 offset-sm-3 col-lg-3 offset-lg-2">
       <h3>Register a new account</h3>
-      <form className="pt-3" onSubmit={(e: any) => handleSubmit(e)}>
+      <form className="pt-3" onSubmit={handleSubmit}>
         <label>Name</label>
-        <input type="text" id="name" onChange={(e: any) => handleChange(e)} />
+        <input type="text" id="name" onChange={handleChange} />
         <label>E-mail</label>
-        <input type="text" id="email" onChange={(e: any) => handleChange(e)} />
+        <input type="text" id="email" onChange={handleChange} />
         <label>Password</label>
-        <input
-          type="password"
-          id="password"
-          onChange={(e: any) => handleChange(e)}
-        />
+        <input type="password" id="password" onChange={handleChange} />
         <label>Password repeat</label>
-        <input
-          type="password"
-          id="repassword"
-          onChange={(e: any) => handleChange(e)}
-        />
+        <input type="password" id="repassword" onChange={handleChange} />
         <button className="button">Register account</button>
       </form>
     </div>

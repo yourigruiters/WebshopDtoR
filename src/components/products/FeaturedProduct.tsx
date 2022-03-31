@@ -29,11 +29,11 @@ const CompleteProduct: React.FC<IProps> = ({
     }
   }, [randomProduct]);
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmount(parseInt(e.target.value));
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const foundProduct = cart.find(
@@ -75,13 +75,13 @@ const CompleteProduct: React.FC<IProps> = ({
           Quantity <span className="quantity">(Items included)</span>
         </h6>
         <p className="error">{error}</p>
-        <form onSubmit={(e: any) => handleSubmit(e)}>
+        <form onSubmit={handleSubmit}>
           <input
             type="number"
             min="1"
             max="10"
             value={amount}
-            onChange={(e: any) => handleChange(e)}
+            onChange={handleChange}
           />
           <button className="button w-100">Add to cart</button>
         </form>

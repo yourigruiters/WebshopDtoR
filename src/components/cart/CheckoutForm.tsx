@@ -18,7 +18,7 @@ const CheckoutForm: React.FC<IProps> = ({ amount, total }) => {
     if (!stripe || !elements) return;
   }, [stripe, elements]);
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!stripe || !elements) return;
@@ -63,7 +63,7 @@ const CheckoutForm: React.FC<IProps> = ({ amount, total }) => {
             </tr>
           </thead>
         </table>
-        <form onSubmit={(e: any) => handleSubmit(e)}>
+        <form onSubmit={handleSubmit}>
           <PaymentElement id="payment-element" />
           <button className="button w-100 no-styles mt-2">Pay</button>
         </form>

@@ -6,11 +6,11 @@ interface IProps {}
 const Footer: React.FC<IProps> = () => {
   const [email, setEmail] = useState("");
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLButtonElement>) => {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     alert("Unavailable");
@@ -84,11 +84,11 @@ const Footer: React.FC<IProps> = () => {
             <div className="col-12 col-sm-6 col-lg-3 connect">
               <h5 className="text-uppercase second">Connect</h5>
               <p className="grey">Join our mailing list for updates</p>
-              <form onSubmit={(e: any) => handleSubmit(e)}>
+              <form onSubmit={handleSubmit}>
                 <input type="email" />
                 <button
                   className="button"
-                  onChange={(e: any) => handleChange(e)}
+                  onChange={handleChange}
                   placeholder="Enter email..."
                   value={email}
                 >

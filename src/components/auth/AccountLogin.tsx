@@ -8,11 +8,11 @@ const AccountLogin: React.FC<IProps> = () => {
     password: "",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     alert("Unavailable");
@@ -28,15 +28,11 @@ const AccountLogin: React.FC<IProps> = () => {
       <h3>
         Already registered? <strong>Login here!</strong>
       </h3>
-      <form className="pt-3" onSubmit={(e: any) => handleSubmit(e)}>
+      <form className="pt-3" onSubmit={handleSubmit}>
         <label>E-mail/Username</label>
-        <input type="email" id="email" onChange={(e: any) => handleChange(e)} />
+        <input type="email" id="email" onChange={handleChange} />
         <label>Password</label>
-        <input
-          type="password"
-          id="password"
-          onChange={(e: any) => handleChange(e)}
-        />
+        <input type="password" id="password" onChange={handleChange} />
         <button className="button">Login</button>
       </form>
     </div>

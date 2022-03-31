@@ -12,11 +12,11 @@ const Shop: React.FC<IProps> = ({ products, cart, addToCart }) => {
   const [allProducts, setAllProducts] = useState(products);
   const [search, setSearch] = useState("");
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
 
-  const handleSelect = (e: any) => {
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     let productList = products;
 
     switch (e.target.value) {
