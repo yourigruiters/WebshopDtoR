@@ -11,4 +11,5 @@ React webshop made from previous HTML design
 
 ##### Shop page
 
-![Shop](/readme_screenshots/webshop.png)
+![Shop1](/readme_screenshots/webshop.png)
+![Shop2](/readme_screenshots/webshop2.png)
